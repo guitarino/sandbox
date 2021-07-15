@@ -43,25 +43,26 @@ class Message {
 }
 
 function main() {
+	// We'll be sending a message from Alice to Bob
 	const alice = new Person();
 	const bob = new Person();
 
 	const message = new Message("Hello world!");
 
-	// Alice encrypts the message with her private and Bob's public key, then sends it to Bob
+	// 1. Alice encrypts the message with her private and Bob's public key, then sends it to Bob
 	alice.encrypt(message);
 	message.encrypt(bob.publicKey);
 
-	// Bob receives the message, decrypts it with his public key, encrypts it with his private key, then sends it back to Alice
+	// 2. Bob receives the message, decrypts it with his public key, encrypts it with his private key, then sends it back to Alice
 	message.decrypt(bob.publicKey);
 	bob.encrypt(message);
 
-	// Alice receives it, decrypts it with her private key, encrypts it with her public key, then sends it to Bob
-	// After this point, the message is only encrypted with her public and Bob's private key
+	// 3. Alice receives it, decrypts it with her private key, encrypts it with her public key, then sends it to Bob
+	//    After this point, the message is only encrypted with her public and Bob's private key
 	alice.decrypt(message);
 	message.encrypt(alice.publicKey);
 
-	// So, Bob just decrypts the message
+	// 4. So, Bob just decrypts the message
 	bob.decrypt(message);
 	message.decrypt(alice.publicKey);
 
